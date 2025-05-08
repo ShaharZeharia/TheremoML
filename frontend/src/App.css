@@ -1,0 +1,152 @@
+@import "colors.css";
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  background-color: var(--background-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar ul:hover a {
+  opacity: 0.4;
+}
+
+.navbar a:hover {
+  opacity: 1 !important;
+}
+
+.logo-container {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--brand-title);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 24px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--nav-link-color);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--nav-link-hover);
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background-color: var(--logout-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: var(--logout-hover);
+}
+
+.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 20px 40px;
+}
+
+.home-page h1 {
+  font-size: 2.5rem;
+  color: var(--brand-title);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.home-page p {
+  color: #555;
+  font-size: 1.05rem;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.home-page h2 {
+  font-size: 1.5rem;
+  margin-top: 40px;
+  color: #1f1f1f;
+  text-align: left;
+}
+
+.home-page section {
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input {
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  padding: 10px 14px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #46a6c5;
+}
+
+.nav-logo {
+  height: 36px;
+  width: auto;
+  transition: transform 0.2s ease;
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .main-content {
+    padding: 100px 20px 40px;
+  }
+}

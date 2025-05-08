@@ -1,0 +1,52 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# === Node.js / React ===
+/frontend/src/firebase-config.js
+
+# dependencies
+/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.js
+
+# testing
+/frontend/coverage
+
+# production
+/frontend/build
+
+# environment files
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === Firebase Functions ===
+frontend/functions/node_modules/
+frontend/functions/.env
+frontend/functions/.env.local
+frontend/functions/.env.*.local
+frontend/functions/.cache/
+
+# === Python / Backend ===
+
+# Ignore virtual environment
+backend/.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Ignore macOS hidden file
+.DS_Store
+
+# Ignore data and models folders
+data/
+models/
+
+
+
