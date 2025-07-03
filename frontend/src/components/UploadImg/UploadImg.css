@@ -108,8 +108,8 @@
 .spinner-inline {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.4); 
-  border-top: 2px solid white; 
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top: 2px solid white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-right: 8px;

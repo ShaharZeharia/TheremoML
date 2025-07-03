@@ -48,5 +48,18 @@ __pycache__/
 data/
 models/
 
+# Compiled Python files
+*.pyc
+__pycache__/
 
+# dotenv / local config files
+.env
+.env.*
 
+# VSCode settings 
+.vscode/
+
+# Local SQLite or temporary data
+*.sqlite
+*.db
+*.sqlite3

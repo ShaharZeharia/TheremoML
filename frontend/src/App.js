@@ -18,42 +18,6 @@ import Home from "./components/Home/Home.jsx";
 import Report from "./components/Report/Report.jsx";
 import History from "./components/History/History.jsx";
 
-// function Navbar({ user, onLogout }) {
-//   const location = useLocation();
-//   const showNavbar = !location.pathname.startsWith("/login");
-
-//   if (!showNavbar) return null;
-
-//   return (
-//     <nav className="navbar">
-//       <Link to="/" className="logo-container">
-//         <img src="/logo.svg" alt="ThermoML Logo" className="nav-logo" />
-//       </Link>
-//       <ul className="nav-links">
-//         <li>
-//           <Link to="/">Home</Link>
-//         </li>
-//         <li>
-//           <Link to="/home">Upload</Link>
-//         </li>
-//         <li>
-//           <Link to="/history">History</Link>
-//         </li>
-//       </ul>
-
-//       {user ? (
-//         <button className="logout-button" onClick={onLogout}>
-//           Logout
-//         </button>
-//       ) : (
-//         <Link to="/login" className="logout-button">
-//           Sign In
-//         </Link>
-//       )}
-//     </nav>
-//   );
-// }
-
 function Navbar({ user, onLogout }) {
   const location = useLocation();
   const navigate = useNavigate();

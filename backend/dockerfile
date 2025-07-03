@@ -1,0 +1,42 @@
+FROM python:3.12-slim
+
+# Install dependencies including build tools and perl
+RUN apt-get update && apt-get install -y \
+    wget \
+    unzip \
+    perl \
+    make \
+    gcc \
+    libimage-exiftool-perl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install exiftool v13.26 manually
+WORKDIR /opt
+RUN wget https://exiftool.org/Image-ExifTool-13.26.tar.gz && \
+    tar -xzf Image-ExifTool-13.26.tar.gz && \
+    cd Image-ExifTool-13.26 && \
+    perl Makefile.PL && \
+    make && \
+    make install && \
+    cd .. && rm -rf Image-ExifTool-13.26*
+
+# Create app directory
+WORKDIR /app
+
+# Copy project files and models
+COPY ./app /app
+COPY ./models /app/models
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Set environment variable
+ENV MODEL_DIR=/app/models
+
+# Expose port if needed (for API)
+EXPOSE 7860
+
+HEALTHCHECK CMD curl --fail http://localhost:7860/health || exit 1
+
+# Run your app
+CMD ["python", "main.py"]

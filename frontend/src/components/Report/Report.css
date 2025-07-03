@@ -27,6 +27,38 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
+.report-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.upload-new-button,
+.print-button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.upload-new-button:hover,
+.print-button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.upload-new-button:active,
+.print-button:active {
+  transform: scale(0.97);
+}
+
 .diagnosis-text {
   font-size: 1.1rem;
   color: #444;
@@ -68,5 +100,79 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+/* Styles to optimize the report layout for clean printing */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    color: black !important;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-size: 12pt;
+  }
+
+  .navbar,
+  .logout-button,
+  .upload-new-button,
+  .print-button,
+  .report-actions,
+  .fullscreen-loader {
+    display: none !important;
+  }
+
+  .report-container {
+    box-shadow: none !important;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+  }
+
+  .report-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .report-header h2 {
+    font-size: 24pt;
+    margin-bottom: 8px;
+  }
+
+  .report-meta {
+    font-size: 10pt;
+    color: black;
+  }
+
+  .report-image {
+    max-width: 100%;
+    height: auto;
+    border: none;
+    box-shadow: none;
+    display: block;
+    margin: 20px auto;
+  }
+
+  .diagnosis-section {
+    margin-top: 20px;
+    font-size: 14pt;
+  }
+
+  .diagnosis-text {
+    background: none !important;
+    color: black !important;
+    padding: 12px;
+    border-left: 4px solid black;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }

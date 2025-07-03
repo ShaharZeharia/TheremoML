@@ -6,106 +6,158 @@ import "./Report.css";
 function ReportPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { imageUrl } = location.state || {};
-  const [processedImage, setProcessedImage] = useState(null);
-  const [diagnosis, setDiagnosis] = useState("");
+  const { imageUrl, reportId } = location.state || {};
+  const [reportData, setReportData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [statusMessage, setStatusMessage] = useState(
+    "Initializing analysis..."
+  );
 
   useEffect(() => {
-    if (!imageUrl) {
-      navigate("/upload");
+    if (!imageUrl || !reportId) {
+      navigate("/home");
       return;
     }
 
-    const fetchReport = async () => {
-      //     CLOUD FUNCTIONS
-      //     try {
-      //       const analyzeAndSaveReport = firebase
-      //         .app()
-      //         .functions("your-region") // e.g., "us-central1"
-      //         .httpsCallable("analyzeAndSaveReport");
+    const auth = firebase.auth();
+    const user = auth.currentUser;
 
-      //       const result = await analyzeAndSaveReport({ imageUrl });
+    if (!user) {
+      navigate("/login");
+      return;
+    }
 
-      //       setProcessedImage(result.data.processedImageUrl || imageUrl);
-      //       setDiagnosis(result.data.diagnosis);
-      //     } catch (err) {
-      //       console.error(err);
-      //       setError("There was an error processing the image.");
-      //     } finally {
-      //       setLoading(false);
-      //     }
-      //   };
-      //    STRAIGHT TO HUGGING FACE/SERVER
-      //   try {
-      //     const response = await fetch("https://your-server.com/api/analyze", {
-      //       method: "POST",
-      //       headers: { "Content-Type": "application/json" },
-      //       body: JSON.stringify({ imageUrl }),
-      //     });
+    // Set up real-time listener for report status
+    const reportRef = firebase
+      .database()
+      .ref(`users/${user.uid}/reports/${reportId}`);
 
-      //     if (!response.ok) throw new Error("Failed to fetch diagnosis.");
+    const unsubscribe = reportRef.on(
+      "value",
+      (snapshot) => {
+        const data = snapshot.val();
 
-      //     const data = await response.json();
-      //     setProcessedImage(data.processedImageUrl);
-      //     setDiagnosis(data.diagnosis);
-      //   } catch (err) {
-      //     console.error(err);
-      //     setError("There was an error processing the image.");
-      //   } finally {
-      //     setLoading(false);
-      //   }
-      // };
-      try {
-        // Simulate network delay
-        await new Promise((res) => setTimeout(res, 10000));
+        if (data) {
+          setReportData(data);
 
-        // Simulate response from server
-        const mockData = {
-          processedImageUrl: imageUrl, // You can keep it the same for testing
-          diagnosis: "This is a mock diagnosis result for testing purposes.",
-        };
-
-        setProcessedImage(mockData.processedImageUrl);
-        setDiagnosis(mockData.diagnosis);
-      } catch (err) {
-        console.error(err);
-        setError("There was an error processing the image.");
-      } finally {
+          switch (data.status) {
+            case "processing":
+              setStatusMessage("Analyzing image, please wait...");
+              setLoading(true);
+              break;
+            case "completed":
+              setStatusMessage("Analysis complete!");
+              setLoading(false);
+              break;
+            case "failed":
+              setError(data.error || "Analysis failed. Please try again.");
+              setLoading(false);
+              break;
+            default:
+              setStatusMessage("Processing...");
+          }
+        }
+      },
+      (error) => {
+        console.error("Database error:", error);
+        setError("Failed to track analysis progress.");
         setLoading(false);
       }
-    };
+    );
 
-    fetchReport();
-  }, [imageUrl, navigate]);
+    // Cleanup listener on unmount
+    return () => {
+      reportRef.off("value", unsubscribe);
+    };
+  }, [imageUrl, reportId, navigate]);
 
   if (loading) {
     return (
       <div className="fullscreen-loader">
         <div className="spinner" />
-        <p>Analyzing image, please wait...</p>
+        <p>{statusMessage}</p>
+        <div className="progress-info">
+          <p>This may take a few minutes...</p>
+          {reportData?.createdAt && (
+            <p>
+              Started: {new Date(reportData.createdAt).toLocaleTimeString()}
+            </p>
+          )}
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
+      <div className="report-container error-container">
+        <h2>Analysis Error</h2>
+        <p className="error-message">{error}</p>
+        <div className="error-actions">
+          <button onClick={() => navigate("/home")} className="upload-new-button">
+            Upload New Image
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!reportData || reportData.status !== "completed") {
+    return (
       <div className="report-container">
-        <p>{error}</p>
+        <p>Report data not available.</p>
+        <button onClick={() => navigate("/home")} className="back-button">
+          Back to Upload
+        </button>
       </div>
     );
   }
 
   return (
     <div className="report-container">
-      <h2>Diagnosis Report</h2>
-      <img
-        src={processedImage}
-        alt="Processed result"
-        className="report-image"
-      />
-      <div className="diagnosis-text">{diagnosis}</div>
+      <div className="report-header">
+        <h2>Diagnosis Report</h2>
+        <div className="report-meta">
+          <p>
+            Completed:{" "}
+            {new Date(
+              reportData.updatedAt || reportData.createdAt
+            ).toLocaleString()}
+          </p>
+          <span className="status-badge completed">✓ Analysis Complete</span>
+        </div>
+      </div>
+
+      <div className="report-content">
+        <div className="image-section">
+          <h3>Processed Image</h3>
+          <img
+            src={reportData.processedImageUrl || reportData.imageUrl}
+            alt="Processed result"
+            className="report-image"
+          />
+        </div>
+
+        <div className="diagnosis-section">
+          <h3>Diagnosis</h3>
+          <div className="diagnosis-text">
+            {reportData.diagnosis || "No diagnosis available"}
+          </div>
+        </div>
+      </div>
+
+      <div className="report-actions">
+        <button
+          onClick={() => navigate("/home")}
+          className="upload-new-button"
+        >
+          Analyze Another Image
+        </button>
+        <button onClick={() => window.print()} className="print-button">
+          Print Report
+        </button>
+      </div>
     </div>
   );
 }

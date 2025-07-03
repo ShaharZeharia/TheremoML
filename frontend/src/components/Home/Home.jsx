@@ -23,10 +23,10 @@ function Home() {
         <h2>Research Background</h2>
         <p>
           This project is developed in collaboration with the{" "}
-          <strong>TH-SRG01</strong> study, led by Dr. Yair Barzilay and Dr.
-          Lilach Gavish. The study focuses on thermal imaging of surgeons'
-          hands, a population known to be susceptible to inflammation due to the
-          physical demands of surgery.
+          <strong>TH-SRG01</strong> study, led by Dr. Yair Barzilay, Dr. Lilach
+          Gavish, and Dr. Osrit Hoffer. The study focuses on thermal imaging of
+          surgeons' hands, a population known to be susceptible to inflammation
+          due to the physical demands of surgery.
         </p>
         <p>
           By analyzing thermal anomalies and pain distribution patterns,

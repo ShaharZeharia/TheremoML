@@ -33,7 +33,7 @@ function UploadImg() {
       }
       setFile(selectedFile);
       setPreviewURL(URL.createObjectURL(selectedFile));
-      setUploadMessage(""); 
+      setUploadMessage("");
     } else {
       setFile(null);
       setPreviewURL(null);
@@ -42,9 +42,6 @@ function UploadImg() {
   };
 
   const handleUpload = async () => {
-    const auth = firebase.auth();
-    const user = auth.currentUser;
-
     if (!file) {
       setUploadMessage("Please select a file first.");
       return;
@@ -57,43 +54,85 @@ function UploadImg() {
 
     setIsUploading(true);
 
-    const storageRef = firebase
-      .storage()
-      .ref(`uploads/${user.uid}/${file.name}`);
-
     try {
+      // Ensure user is authenticated
+      const auth = firebase.auth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        setUploadMessage("Please log in first.");
+        setIsUploading(false);
+        return;
+      }
+
+      console.log("User is authenticated:", user.uid);
+
+      const storageRef = firebase
+        .storage()
+        .ref(`uploads/${user.uid}/${file.name}`);
+
+      // Upload image to Firebase Storage
       await storageRef.put(file);
       const downloadURL = await storageRef.getDownloadURL();
-      setUploadMessage("Upload successful!");
+
+      console.log("Image uploaded successfully. URL:", downloadURL);
+
+      // Get the user's ID token for authentication
+      const idToken = await user.getIdToken();
+
+      // Make POST request to your Cloud Function
+      const functionUrl = `https://us-central1-thermoml.cloudfunctions.net/initiateAnalysis`;
+
+      const response = await fetch(functionUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+          imageUrl: downloadURL,
+          uid: user.uid,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.error || `HTTP error! status: ${response.status}`
+        );
+      }
+
+      const result = await response.json();
+
+      console.log("Analysis initiated successfully:", result);
+
+      setUploadMessage("Upload successful! Analysis initiated...");
+
+      // Navigate to report page
       navigate("/report", {
-        state: { imageUrl: downloadURL },
+        state: {
+          imageUrl: downloadURL,
+          reportId: result.reportId,
+        },
       });
     } catch (error) {
-      console.error("Upload error:", error);
-      setUploadMessage("Upload failed. Please try again.");
+      console.error("Upload or analysis initiation error:", error);
+
+      if (
+        error.message.includes("401") ||
+        error.message.includes("unauthenticated")
+      ) {
+        setUploadMessage("Authentication failed. Please log in again.");
+        navigate("/login");
+      } else {
+        setUploadMessage(
+          `Error: ${error.message || "Upload failed. Please try again."}`
+        );
+      }
     } finally {
       setIsUploading(false);
     }
   };
-
-  // const handleUpload = async () => {
-  //   if (!file) {
-  //     setUploadMessage("Please select a file first.");
-  //     return;
-  //   }
-
-  //   if (file.size > 8 * 1024 * 1024) {
-  //     setUploadMessage("File size must be less than 8MB.");
-  //     return;
-  //   }
-
-  //   setIsUploading(true);
-
-  //   setTimeout(() => {
-  //     setIsUploading(false);
-  //     setUploadMessage("Simulated upload complete!");
-  //   }, 20000);
-  // };
 
   return (
     <div className="upload-page">
