@@ -278,6 +278,8 @@ The user's images were blurred for the privacy of the participants.
 
 ![Home Page ](https://ibb.co/2Qj7n6C)
 
+![Home Page](https://i.ibb.co/XTN8xth/example2.jpg)
+
 ![History Example](https://ibb.co/ZCtmzxn)
 
 ![Upload Example](https://ibb.co/Z6mNTWHV)
