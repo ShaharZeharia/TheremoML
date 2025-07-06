@@ -276,8 +276,6 @@ The user's images were blurred for the privacy of the participants.
 
 <div align="left">
 
- <img src="https://i.ibb.co/99tGYswN/example4.jpg" alt="Upload Example" width="600"/>
-
   <img src="https://i.ibb.co/bZrgW3C/example3.jpg" alt="Home Page" width="600"/>
 
   <br/><br/>
