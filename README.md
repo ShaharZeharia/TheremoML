@@ -279,7 +279,7 @@ The user's images were blurred for the privacy of the participants.
 
 ![History Example](https://i.ibb.co/XTN8xth/example2.jpg)
 
-![Upload Example](https://i.ibb.co/XYZ1234/example4.jpg)
+![Upload Example](https://i.ibb.co/99tGYswN/example4.jpg)
   
 
 ## 🛠️ Tech Stack
