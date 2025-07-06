@@ -274,16 +274,12 @@ For backend processing requests or questions, reach out to us at: **ThermoML@out
 
 The user's images were blurred for the privacy of the participants.
 
-  
 
-![Home Page ](https://ibb.co/2Qj7n6C)
+![Home Page](https://i.ibb.co/bZrgW3C/example3.jpg)
 
-![Home Page](https://i.ibb.co/XTN8xth/example2.jpg)
+![History Example](https://i.ibb.co/XTN8xth/example2.jpg)
 
-![History Example](https://ibb.co/ZCtmzxn)
-
-![Upload Example](https://ibb.co/Z6mNTWHV)
-
+![Upload Example](https://i.ibb.co/XYZ1234/example4.jpg)
   
 
 ## 🛠️ Tech Stack
