@@ -274,7 +274,9 @@ For backend processing requests or questions, reach out to us at: **ThermoML@out
 
 The user's images were blurred for the privacy of the participants.
 
-<div align="center">
+<div align="left">
+
+ <img src="https://i.ibb.co/99tGYswN/example4.jpg" alt="Upload Example" width="600"/>
 
   <img src="https://i.ibb.co/bZrgW3C/example3.jpg" alt="Home Page" width="600"/>
 
