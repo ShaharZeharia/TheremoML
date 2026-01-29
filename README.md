@@ -274,19 +274,22 @@ For backend processing requests or questions, reach out to us at: **ThermoML@out
 
 The user's images were blurred for the privacy of the participants.
 
+
 <div align="left">
- ###Home Page
-  <img src="https://i.ibb.co/bZrgW3C/example3.jpg" alt="Home Page" width="600"/>
 
-  <br/><br/>
- ###History Example
-  <img src="https://i.ibb.co/XTN8xth/example2.jpg" alt="History Example" width="600"/>
 
-  <br/><br/>
- ###Upload Example
-  <img src="https://i.ibb.co/99tGYswN/example4.jpg" alt="Upload Example" width="600"/>
+### Home Page
+<img src="https://github.com/user-attachments/assets/b64a021b-527b-40f3-b597-e7c7be99f8d0" alt="Home Page" width="700"/>
 
-  <br/><br/>
+<br/>
+
+### History Example
+<img src="https://github.com/user-attachments/assets/7e318130-32b6-4bd0-a243-a960d25aa2e9" alt="History Example" width="700"/>
+
+<br/>
+
+### Upload Example
+<img src="https://github.com/user-attachments/assets/9074f31d-4b1b-40dc-b937-0b1eef852787" alt="Upload Example" width="700"/>
 
 </div>
 
@@ -315,3 +318,4 @@ This project was developed as part of our final BSc Computer Science project.
 We thank Dr. Lilach Gavish and Dr. Yair Barzilay for providing access to the medical dataset under an approved study.
 
 The software (ThermoML) is developed independently by Max Feldman and Shahar Zeharia and is licensed under the MIT License.
+
